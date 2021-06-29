@@ -1,6 +1,15 @@
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import { Col, Row, Card, Button, Typography, Popconfirm, message } from "antd";
+import {
+  Col,
+  Row,
+  Card,
+  Button,
+  Typography,
+  Popconfirm,
+  message,
+  notification,
+} from "antd";
 import { useHistory } from "react-router-dom";
 import { useApi } from "hooks/useApi";
 import { GET_TASKS_ENDPOINT, GET_TASK_ENDPOINT } from "utils/constant";
@@ -20,7 +29,13 @@ export const TodoList: React.FC = () => {
 
   const removeTask = async (id) => {
     const response = await remove(`${GET_TASK_ENDPOINT}/${id}`);
-    if (response?.status === 200) getTodoLists();
+
+    if (response?.status === 200) {
+      notification["success"]({
+        message: "Delete task successfully.",
+      });
+      getTodoLists();
+    }
   };
 
   useEffect(() => {

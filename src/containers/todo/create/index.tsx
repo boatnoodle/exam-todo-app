@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Form, Input, Button, Typography } from "antd";
+import { Col, Row, Form, Input, Button, Typography, notification } from "antd";
 import { useHistory } from "react-router-dom";
 import { useApi } from "hooks/useApi";
 import { CREATE_TASK_ENDPOINT } from "utils/constant";
@@ -41,7 +41,12 @@ export const CreateTask: React.FC = () => {
             initialValues={{ remember: true }}
             onFinish={async ({ title, description }) => {
               const response = await createTask({ title, description });
-              if (response?.status === 200) history.push("/todo-list");
+              if (response?.status === 200) {
+                notification["success"]({
+                  message: "Create task successfully.",
+                });
+                history.push("/todo-list");
+              }
             }}
           >
             <Form.Item

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Form, Input, Button, Typography } from "antd";
+import { Col, Row, Form, Input, Button, Typography, notification } from "antd";
 import { useHistory, useParams } from "react-router-dom";
 import { useApi } from "hooks/useApi";
 import { GET_TASK_ENDPOINT } from "utils/constant";
@@ -58,7 +58,12 @@ export const UpdateTask: React.FC = () => {
             }}
             onFinish={async ({ title, description }) => {
               const response = await updateTask({ title, description });
-              if (response?.status === 200) history.push("/todo-list");
+              if (response?.status === 200) {
+                notification["success"]({
+                  message: "Update task successfully.",
+                });
+                history.push("/todo-list");
+              }
             }}
           >
             <Form.Item
