@@ -9,7 +9,7 @@ const Container = styled.div`
   min-height: 100%;
   padding: 0 16px;
   flex-direction: column;
-  background: black;
+  background: #f0f2f5;
 `;
 
 export const LayoutAuth: React.FC<any> = ({ children }) => {

@@ -1,14 +1,14 @@
 import React from "react";
-import { Col, Row, Form, Input, Button, notification } from "antd";
+import { Col, Row, Form, Input, Button } from "antd";
 import fetch from "isomorphic-unfetch";
-import { API_ENDPOINT } from "utils/constant";
+import { API_ENDPOINT, REGISTER_ENDPOINT } from "utils/constant";
 import { useHistory } from "react-router-dom";
 
-export const SignIn: React.FC = () => {
+export const SignUp: React.FC = () => {
   const history = useHistory();
 
-  const signIn = async (payload: { username: string; password: string }) => {
-    return await fetch(`${API_ENDPOINT}/users/auth`, {
+  const signup = async (payload: { username: string; password: string }) => {
+    return await fetch(`${API_ENDPOINT}${REGISTER_ENDPOINT}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,7 +20,7 @@ export const SignIn: React.FC = () => {
   return (
     <div>
       <Row justify="center" align="middle" style={{ marginBottom: "24px" }}>
-        <Col>เข้าสู่ระบบ</Col>
+        <Col>สมัครสมาชิก</Col>
       </Row>
       <Row>
         <Col span={24}>
@@ -28,18 +28,11 @@ export const SignIn: React.FC = () => {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
             onFinish={async ({ username, password }) => {
-              const response = await signIn({ username, password });
-              const data = await response.json();
-              if (response?.status === 401) {
-                notification["error"]({
-                  message: "Invalid username or password",
-                  description: "Please try again",
-                });
-              } else if (response?.status === 200) {
-                localStorage.setItem("token", data?.token);
-                history.push("/todo-list");
+              const response = await signup({ username, password });
+              if (response) {
+                const data = await response.json();
+                if (data?.status === 200) history.push("/signin");
               }
             }}
           >
@@ -64,18 +57,18 @@ export const SignIn: React.FC = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ span: 24 }}>
-              <Row gutter={6} justify="center">
+              <Row gutter={6} justify="center" align="middle">
                 <Col>
                   <Button type="primary" htmlType="submit">
-                    เข้าสู่ระบบ
+                    สมัครสมาชิก
                   </Button>
                 </Col>
                 <Col>
                   <Button
                     type="default"
-                    onClick={() => history.push("/sign-up")}
+                    onClick={() => history.push("sign-in")}
                   >
-                    สมัครสมาชิก
+                    เข้าสู่ระบบ
                   </Button>
                 </Col>
               </Row>

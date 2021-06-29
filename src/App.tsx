@@ -11,6 +11,7 @@ import { TodoList } from "containers/todo/list";
 import { CreateTask } from "containers/todo/create";
 import { UpdateTask } from "containers/todo/update";
 import { TaskDetail } from "containers/todo/show";
+import { SignUp } from "containers/signup";
 
 const PublicRoute = ({
   component: Component,
@@ -69,6 +70,13 @@ function App() {
           exact
           path="/sign-in"
           component={SignIn}
+          useLayout="auth"
+          protectedRoute={false}
+        />
+        <PublicRoute
+          exact
+          path="/sign-up"
+          component={SignUp}
           useLayout="auth"
           protectedRoute={false}
         />

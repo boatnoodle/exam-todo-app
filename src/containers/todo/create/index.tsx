@@ -65,9 +65,18 @@ export const CreateTask: React.FC = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Save
-              </Button>
+              <Row gutter={6}>
+                <Col>
+                  <Button type="primary" htmlType="submit">
+                    Save
+                  </Button>
+                </Col>
+                <Col>
+                  <Button danger onClick={() => history.push("/todo-list")}>
+                    Back
+                  </Button>
+                </Col>
+              </Row>
             </Form.Item>
           </Form>
         </Col>
