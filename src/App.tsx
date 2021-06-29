@@ -2,12 +2,15 @@ import React from "react";
 import GlobalStyle from "global-styles";
 
 import { Switch, Route } from "react-router-dom";
-import { Layout } from "components/Layout";
+import { LayoutMain } from "components/Layout";
 import { HomePage } from "pages/home";
 import { SignIn } from "containers/singin";
 import { LayoutAuth } from "components/Layout/auth";
 import { ProvideAuth, ProtectedFragment } from "hooks/auth/useSession";
 import { TodoList } from "containers/todo/list";
+import { CreateTask } from "containers/todo/create";
+import { UpdateTask } from "containers/todo/update";
+import { TaskDetail } from "containers/todo/show";
 
 const PublicRoute = ({
   component: Component,
@@ -35,16 +38,16 @@ const PublicRoute = ({
       if (protectedRoute)
         return (
           <ProtectedFragment>
-            <Layout>
+            <LayoutMain>
               <Component {...props} />
-            </Layout>
+            </LayoutMain>
           </ProtectedFragment>
         );
       else
         return (
-          <Layout>
+          <LayoutMain>
             <Component {...props} />
-          </Layout>
+          </LayoutMain>
         );
   };
 
@@ -73,6 +76,27 @@ function App() {
           exact
           path="/todo-list"
           component={TodoList}
+          useLayout="main"
+          protectedRoute={false}
+        />
+        <PublicRoute
+          exact
+          path="/task/:id"
+          component={TaskDetail}
+          useLayout="main"
+          protectedRoute={false}
+        />
+        <PublicRoute
+          exact
+          path="/create-task"
+          component={CreateTask}
+          useLayout="main"
+          protectedRoute={false}
+        />
+        <PublicRoute
+          exact
+          path="/update-task/:id"
+          component={UpdateTask}
           useLayout="main"
           protectedRoute={false}
         />
