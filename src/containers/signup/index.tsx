@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Form, Input, Button } from "antd";
+import { Col, Row, Form, Input, Button, notification } from "antd";
 import fetch from "isomorphic-unfetch";
 import { API_ENDPOINT, REGISTER_ENDPOINT } from "utils/constant";
 import { useHistory } from "react-router-dom";
@@ -32,7 +32,17 @@ export const SignUp: React.FC = () => {
               const response = await signup({ username, password });
               if (response) {
                 const data = await response.json();
-                if (data?.status === 200) history.push("/signin");
+                if (data?.message?.includes("This username is already exist")) {
+                  notification["error"]({
+                    message: "This username is already exist",
+                    description: "Please try again",
+                  });
+                } else if (data) {
+                  notification["success"]({
+                    message: "Register successfully",
+                  });
+                  history.push("/sign-in");
+                }
               }
             }}
           >
